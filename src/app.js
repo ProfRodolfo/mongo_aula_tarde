@@ -1,4 +1,16 @@
 import express from 'express'
+import connectaNaDatabase from './config/dbConnect.js'
+
+const conexao = await connectaNaDatabase();
+
+conexao.on("error", (erro) =>{
+  console.error("Erro de conexao", erro)
+})
+
+conexao.once("open", () =>{
+  console.log("Conexao com o banco feita com sucesso")
+})
+
 
 const app = express()
 app.use(express.json())
@@ -45,4 +57,6 @@ app.put("/livros/:id", (req, res) => {
 
 
 export default app;
+
+//mongodb+srv://admin:admin123@cluster0.cbclonx.mongodb.net/livraria?retryWrites=true&w=majority&appName=Cluster0
 
